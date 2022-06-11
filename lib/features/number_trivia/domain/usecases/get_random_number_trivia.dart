@@ -5,22 +5,15 @@ import 'package:cleanrchitecture_tdd/features/number_trivia/domain/repositories/
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-class GetConcreteNumberTrivia implements UseCase<NumberTrivia, Params> {
+class GetRandomNumberTrivia implements UseCase<NumberTrivia, NoParams> {
   final NumberTriviaRepository repository;
 
-  GetConcreteNumberTrivia(this.repository);
+  GetRandomNumberTrivia(this.repository);
 
   @override
-  Future<Either<Failure, NumberTrivia>> call(Params params) async {
-    return await repository.getConcreteNumberTrivia(params.number);
+  Future<Either<Failure, NumberTrivia>> call(NoParams params) async {
+    return await repository.getRandomNumberTrivia();
   }
 }
 
-class Params extends Equatable {
-  final int number;
 
-  const Params({required this.number}) : super();
-
-  @override
-  List<Object?> get props => [number];
-}
