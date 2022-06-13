@@ -6,6 +6,7 @@ import 'package:cleanrchitecture_tdd/features/number_trivia/data/datasources/num
 import 'package:cleanrchitecture_tdd/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:cleanrchitecture_tdd/features/number_trivia/data/repositories_impl/number_trivia_repository_impl.dart';
 import 'package:cleanrchitecture_tdd/features/number_trivia/domain/entities/number_trivia.dart';
+import 'package:cleanrchitecture_tdd/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -53,6 +54,7 @@ void main() {
       await repositoryImpl?.getConcreteNumberTrivia(tNumber);
       //assert
       verify(mockNetworkInfo?.isConnected);
+      // verify(repositoryImpl?.getConcreteNumberTrivia(tNumber));
     });
 
     group('device is online', () {
@@ -79,7 +81,7 @@ void main() {
         when(mockRemoteDataSource?.getConcreteNumberTrivia(any))
             .thenAnswer((_) async => tNumberTriviaModel);
         //act
-        await repositoryImpl?.getConcreteNumberTrivia(tNumber);
+        await repositoryImpl!.getConcreteNumberTrivia(tNumber);
         //assert
         verify(mockRemoteDataSource?.getConcreteNumberTrivia(tNumber));
         verify(mockLocalDataSource?.cacheNumberTrivia(tNumberTriviaModel));
@@ -89,6 +91,7 @@ void main() {
         'Should return server failure when the call to remote data source is unsucessfull',
         () async {
       //arrange
+      when(mockNetworkInfo?.isConnected).thenAnswer((_) async => true);
       when(mockRemoteDataSource?.getConcreteNumberTrivia(any))
           .thenThrow(ServerException());
       //act
@@ -101,8 +104,35 @@ void main() {
 
     group('device is offline', () {
       setUp(() {
-        when(mockNetworkInfo?.isConnected).thenAnswer((_) async => false);
+        when(mockNetworkInfo!.isConnected).thenAnswer((_) async => false);
       });
+    });
+
+    test(
+        'Should return last locally cached data when the cached data is present',
+        () async {
+      //arrange
+      when(mockLocalDataSource?.getLastNumberTrivia())
+          .thenAnswer((_) async => tNumberTriviaModel);
+      //act
+      final result = await repositoryImpl?.getConcreteNumberTrivia(tNumber);
+      //assert
+      verifyZeroInteractions(mockRemoteDataSource);
+      verify(mockLocalDataSource?.getLastNumberTrivia());
+      expect(result, equals(Right(tNumberTrivia)));
+    });
+
+    test('Should return CacheFailure when there is no cached data present',
+        () async {
+      //arrange
+      when(mockLocalDataSource?.getLastNumberTrivia())
+          .thenThrow(CacheException());
+      //act
+      final result = await repositoryImpl?.getConcreteNumberTrivia(tNumber);
+      //assert
+      verifyZeroInteractions(mockRemoteDataSource);
+      verify(mockLocalDataSource?.getLastNumberTrivia());
+      expect(result, equals(Left(CacheFailure())));
     });
   });
 }
