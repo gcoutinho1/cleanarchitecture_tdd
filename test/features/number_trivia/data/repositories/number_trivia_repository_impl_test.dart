@@ -52,12 +52,12 @@ void main() {
 
   group('getConcreteNumberTrivia', () {
     const tNumber = 1;
-    final tNumberTriviaModel = NumberTriviaModel(
+    const tNumberTriviaModel = NumberTriviaModel(
       text: 'test trivia',
       number: tNumber,
       
     );
-    final NumberTrivia tNumberTrivia = tNumberTriviaModel;
+    const NumberTrivia tNumberTrivia = tNumberTriviaModel;
     test(
       'Should check if the device is online',
       () async {
@@ -83,7 +83,7 @@ void main() {
           final result = await repositoryImpl.getConcreteNumberTrivia(tNumber);
           //assert
           verify(() => mockRemoteDataSource.getConcreteNumberTrivia(tNumber));
-          expect(result, equals(Right(tNumberTrivia)));
+          expect(result, equals(const Right(tNumberTrivia)));
         },
       );
 
@@ -129,7 +129,7 @@ void main() {
         //assert
         verifyZeroInteractions(mockRemoteDataSource);
         verify(() => mockLocalDataSource.getLastNumberTrivia());
-        expect(result, equals(Right(tNumberTrivia)));
+        expect(result, equals(const Right(tNumberTrivia)));
       });
 
       test('Should return CacheFailure when there is no cached data present',
@@ -148,11 +148,11 @@ void main() {
   });
 
   group('getRandomNumberTrivia', () {
-    final tNumberTriviaModel = NumberTriviaModel(
+    const tNumberTriviaModel = NumberTriviaModel(
       text: 'test trivia',
       number: 123,
     );
-    final NumberTrivia tNumberTrivia = tNumberTriviaModel;
+    const NumberTrivia tNumberTrivia = tNumberTriviaModel;
     test(
       'Should check if the device is online',
       () async {
@@ -178,7 +178,7 @@ void main() {
           final result = await repositoryImpl.getRandomNumberTrivia();
           //assert
           verify(() => mockRemoteDataSource.getRandomNumberTrivia());
-          expect(result, equals(Right(tNumberTrivia)));
+          expect(result, equals(const Right(tNumberTrivia)));
         },
       );
 
@@ -224,7 +224,7 @@ void main() {
         //assert
         verifyZeroInteractions(mockRemoteDataSource);
         verify(() => mockLocalDataSource.getLastNumberTrivia());
-        expect(result, equals(Right(tNumberTrivia)));
+        expect(result, equals(const Right(tNumberTrivia)));
       });
 
       test('Should return CacheFailure when there is no cached data present',
