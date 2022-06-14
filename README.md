@@ -10,12 +10,26 @@ as the course was recorded in 2019 and at that time dart did not have **null-saf
 For example, when making mocks for **unit tests** you will need to read the documentations below for a better understanding of what has changed:  
 [Mockito null-safety](https://github.com/dart-lang/mockito/blob/master/NULL_SAFETY_README.md)   
 [Dart null-safety](https://dart.dev/null-safety)  
-[Flutter unit tests](https://docs.flutter.dev/cookbook/testing/unit/mocking)
+[Flutter unit tests](https://docs.flutter.dev/cookbook/testing/unit/mocking)  
+[Mocktail DOC](https://pub.dev/packages/mocktail)
 
 _what's changed in a **nutshell**_
 
-creating a mock **without** null-safety  
-```class MockClassExample extends Mock implements ClassExample {} ```
+<details>
+<summary>Creating a mock without null-safety - mockito </summary>
+
+creating a mock **without** null-safety with mockito
+```
+class MockClassExample extends Mock implements ClassExample {
+
+}
+```
+
+</details>
+
+<details>
+<summary> Creating a mock with null-safety - mockito</summary>
+
 
 - creating a mock **with** null-safety  
  - install [build_runner](https://pub.dev/packages/build_runner)  
@@ -34,6 +48,11 @@ void main() {}
 replace **ClassExampleTest** and **MockClassExampleTest** with the object you are going to mock  
 run ```flutter pub run build_runner build``` on your terminal  
 this will generate the mock file of the object you want to test
+</details>
+
+<details> <summary> Or install mocktail and have fun </summary> 
+run flutter pub add mocktail on your terminal
+</details>
 
 ---
 
