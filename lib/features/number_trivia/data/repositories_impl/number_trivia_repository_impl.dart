@@ -1,9 +1,9 @@
-import 'package:cleanrchitecture_tdd/core/error/exceptions.dart';
+import '../../../../core/error/exceptions.dart';
 
-import 'package:cleanrchitecture_tdd/features/number_trivia/data/models/number_trivia_model.dart';
-import 'package:cleanrchitecture_tdd/features/number_trivia/domain/entities/number_trivia.dart';
-import 'package:cleanrchitecture_tdd/core/error/failures.dart';
-import 'package:cleanrchitecture_tdd/features/number_trivia/domain/repositories/number_trivia_repository.dart';
+import '../models/number_trivia_model.dart';
+import '../../domain/entities/number_trivia.dart';
+import '../../../../core/error/failures.dart';
+import '../../domain/repositories/number_trivia_repository.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/network/network_info.dart';
