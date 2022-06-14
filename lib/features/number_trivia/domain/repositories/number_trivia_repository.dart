@@ -4,6 +4,6 @@ import 'package:cleanrchitecture_tdd/features/number_trivia/domain/entities/numb
 import 'package:cleanrchitecture_tdd/core/error/failures.dart';
 
 abstract class NumberTriviaRepository {
-  Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(int number);
-  Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia();
+  Future<Either<Failure, NumberTrivia>?> getConcreteNumberTrivia(int number);
+  Future<Either<Failure, NumberTrivia>?> getRandomNumberTrivia();
 }

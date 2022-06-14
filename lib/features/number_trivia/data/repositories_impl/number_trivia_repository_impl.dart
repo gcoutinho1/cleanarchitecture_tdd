@@ -1,5 +1,6 @@
 import 'package:cleanrchitecture_tdd/core/error/exceptions.dart';
 import 'package:cleanrchitecture_tdd/core/platform/network_info.dart';
+import 'package:cleanrchitecture_tdd/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:cleanrchitecture_tdd/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:cleanrchitecture_tdd/core/error/failures.dart';
 import 'package:cleanrchitecture_tdd/features/number_trivia/domain/repositories/number_trivia_repository.dart';
@@ -7,6 +8,8 @@ import 'package:dartz/dartz.dart';
 
 import '../datasources/number_trivia_local_data_source.dart';
 import '../datasources/number_trivia_remote_data_source.dart';
+
+typedef _ConcreteOrRandomChooser = Future<NumberTriviaModel>? Function();
 
 class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   final NumberTriviaRemoteDataSource? remoteDataSource;
@@ -18,14 +21,27 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
       required this.localDataSource,
       required this.networkInfo});
   @override
-  Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(
+  Future<Either<Failure, NumberTrivia>?> getConcreteNumberTrivia(
       int number) async {
+    return await _getTrivia(() {
+      return remoteDataSource?.getConcreteNumberTrivia(number);
+    });
+  }
+
+  @override
+  Future<Either<Failure, NumberTrivia>?> getRandomNumberTrivia() async {
+    return await _getTrivia(() {
+      return remoteDataSource?.getRandomNumberTrivia();
+    });
+  }
+
+  Future<Either<Failure, NumberTrivia>> _getTrivia(
+      _ConcreteOrRandomChooser getConcreteOrRandom) async {
     if (await networkInfo!.isConnected) {
       try {
-        final remoteTrivia =
-            await remoteDataSource!.getConcreteNumberTrivia(number);
-        localDataSource?.cacheNumberTrivia(remoteTrivia);
-        return Right(remoteTrivia);
+        final remoteTrivia = await getConcreteOrRandom();
+        localDataSource?.cacheNumberTrivia(remoteTrivia!);
+        return Right(remoteTrivia!);
       } on ServerException {
         return Left(ServerFailure());
       }
@@ -37,11 +53,5 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
         return Left(CacheFailure());
       }
     }
-  }
-
-  @override
-  Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia() {
-    // TODO: implement getRandomNumberTrivia
-    throw UnimplementedError();
   }
 }
