@@ -1,11 +1,12 @@
 import 'package:cleanrchitecture_tdd/core/error/exceptions.dart';
-import 'package:cleanrchitecture_tdd/core/platform/network_info.dart';
+
 import 'package:cleanrchitecture_tdd/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:cleanrchitecture_tdd/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:cleanrchitecture_tdd/core/error/failures.dart';
 import 'package:cleanrchitecture_tdd/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/network/network_info.dart';
 import '../datasources/number_trivia_local_data_source.dart';
 import '../datasources/number_trivia_remote_data_source.dart';
 
