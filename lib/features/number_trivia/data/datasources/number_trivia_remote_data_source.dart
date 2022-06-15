@@ -28,7 +28,11 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
       Uri.parse('http://numbersapi.com/$number'),
       headers: {'Content-Type': 'application/json'},
     );
-    return NumberTriviaModel.fromJson(json.decode(response.body));
+    if (response.statusCode == 200) {
+      return NumberTriviaModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
   }
 
   @override

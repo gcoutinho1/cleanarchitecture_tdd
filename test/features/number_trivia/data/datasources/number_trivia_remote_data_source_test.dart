@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cleanrchitecture_tdd/core/error/exceptions.dart';
 import 'package:cleanrchitecture_tdd/features/number_trivia/data/datasources/number_trivia_remote_data_source.dart';
 import 'package:cleanrchitecture_tdd/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -50,6 +51,19 @@ void main() {
           await remoteDataSourceImpl.getConcreteNumberTrivia(tNumber);
       // asset
       expect(result, equals(tNumberTriviaModel));
+    });
+
+    test(
+        'Should throw a ServerException when the response code is 404 or other',
+        () async {
+      // arrange
+      when(() => mockHttpClient.get(any(), headers: any(named: 'headers')))
+          .thenAnswer(
+              (_) async => http.Response('Something wrong happened', 404));
+      //act
+      final call = remoteDataSourceImpl.getConcreteNumberTrivia;
+      //asset
+      expect(() => call(tNumber), throwsA(const TypeMatcher<ServerException>()));
     });
   });
 }
