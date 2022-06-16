@@ -5,9 +5,9 @@
 
 ---
 
-If you are interested in watching this course, please check this [playlist](https://www.youtube.com/watch?v=KjE2IDphA_U&list=PLB6lc7nQ1n4iYGE_khpXRdJkJEp9WOech&index=1&ab_channel=ResoCoder).  
+if you are interested in learning clean architecture and TDD, please check this [playlist](https://www.youtube.com/watch?v=KjE2IDphA_U&list=PLB6lc7nQ1n4iYGE_khpXRdJkJEp9WOech&index=1&ab_channel=ResoCoder).  
 
-As the course was recorded in 2019 and at that time dart did not have **null-safety** some things you will need to do in a different way if you are using the **Dart** version ```>=2.12``` ```&&``` **Flutter** version ```>= 2.0```.
+As the course was recorded in 2019 and at that time dart did not have **null-safety**, some things you will need to do in a different way if you are using the **Dart** version ```>=2.12``` ```&&``` **Flutter** version ```>= 2.0```.
 
 For example, when making mocks for **unit tests** you will need to read the documentations below for a better understanding of what has changed:  
 [Mockito null-safety](https://github.com/dart-lang/mockito/blob/master/NULL_SAFETY_README.md)   
@@ -51,7 +51,7 @@ run ```flutter pub run build_runner build``` on your terminal
 this will generate the mock file of the object you want to test
 </details>
 
-After a while I was having a lot of problems with the unit tests and I decided to change the **Mockito** for the **Moktail**  
+After a while, I was having a lot of problems with the unit tests and I decided to change the **Mockito** for the **Mocktail**  
 [MockTail Doc](https://pub.dev/packages/mocktail)  
 
 when you are going to implement BLoC and do the unit tests, if you have some problems, I suggest replacing test() with blocTest()  
