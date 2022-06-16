@@ -50,7 +50,53 @@ this will generate the mock file of the object you want to test
 </details>
 
 After a while I was having a lot of problems with the unit tests and I decided to change the **Mockito** for the **Moktail**  
-[MockTail Doc](https://pub.dev/packages/mocktail)
+[MockTail Doc](https://pub.dev/packages/mocktail)  
+when you are going to implement the **BLoC** and do the unit tests, you will probably have a problem if you do the same as the reso did in the videos.
+I suggest replacing **test()** with **blocTest()**  
+[bloc_test details](https://pub.dev/packages/bloc_test)
+<details> <summary> what changes with bloc_test - click to see details </summary>
+
+with test()
+```
+        test('Should emit [Error] when the input is invalid', () async {
+         
+         when(() => mockInputConverter.stringToUnsignedInteger(any()))
+             .thenReturn(Left(InvalidInputFailure()));
+         
+         final expected = [
+           Empty(),
+           Error(errorMessage: INVALID_INPUT_FAILURE_MESSAGE),
+         ];
+         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
+        
+         bloc.add(GetTriviaForConcreteNumber(numberString: tNumberString));
+      });
+```
+      
+      
+with blocTest()
+```
+blocTest(
+        'Should emit [Error] when the input is invalid',
+        setUp: () {
+          when(() => mockInputConverter.stringToUnsignedInteger(any()))
+              .thenReturn(Left(InvalidInputFailure()));
+        },
+        build: () => NumberTriviaBloc(
+          concrete: mockGetConcreteNumberTrivia,
+          random: mockGetRandomNumberTrivia,
+          inputConverter: mockInputConverter,
+        ),
+        act: (NumberTriviaBloc bloc) =>
+            bloc.add(GetTriviaForConcreteNumber(numberString: tNumberString)),
+        expect: () => [
+          const Error(errorMessage: INVALID_INPUT_FAILURE_MESSAGE),
+        ],
+      ); 
+      
+```
+
+</details>
 
 ---
 
