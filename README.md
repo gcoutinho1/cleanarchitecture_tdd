@@ -1,3 +1,5 @@
+![Dart Version](https://img.shields.io/static/v1?label=Dart&message=2.16.2&color=00579d)
+![Flutter Version](https://img.shields.io/static/v1?label=Flutter&message=2.10.4&color=42a5f5)
 # <p align="center"> Clean architecture and test driven development</p>
 #### <p align="center"> A Course of [Reso Coder](https://www.youtube.com/c/ResoCoder) </p>
 
@@ -51,8 +53,8 @@ this will generate the mock file of the object you want to test
 
 After a while I was having a lot of problems with the unit tests and I decided to change the **Mockito** for the **Moktail**  
 [MockTail Doc](https://pub.dev/packages/mocktail)  
-when you are going to implement the **BLoC** and do the unit tests, you will probably have a problem if you do the same as the reso did in the videos.
-I suggest replacing **test()** with **blocTest()**  
+
+when you are going to implement BLoC and do the unit tests, if you have some problems, I suggest replacing test() with blocTest()  
 [bloc_test details](https://pub.dev/packages/bloc_test)
 <details> <summary> what changes with bloc_test - click to see details </summary>
 
@@ -64,7 +66,6 @@ with test()
              .thenReturn(Left(InvalidInputFailure()));
          
          final expected = [
-           Empty(),
            Error(errorMessage: INVALID_INPUT_FAILURE_MESSAGE),
          ];
          expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
