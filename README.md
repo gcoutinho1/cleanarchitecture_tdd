@@ -108,3 +108,10 @@ blocTest(
 <p align="center">
   <img src="https://github.com/gcoutinho1/cleanarchitecture_tdd/blob/main/imgs/diagrama.png">
 </p>
+
+---
+
+<p align="center">
+<img src="https://github.com/gcoutinho1/cleanarchitecture_tdd/blob/main/gifs/number_trivia_app.gif">
+<img src="https://github.com/gcoutinho1/cleanarchitecture_tdd/blob/main/gifs/tdd.gif">
+</p>
